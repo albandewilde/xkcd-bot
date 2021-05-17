@@ -30,3 +30,6 @@ build
 
 # Ignore Gradle build output directory
 app/build/*
+
+# Intellij ide directory
+.idea
