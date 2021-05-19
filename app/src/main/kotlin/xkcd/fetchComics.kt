@@ -5,6 +5,7 @@ import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
+import kotlin.random.Random
 
 private val cantGetComic = Exception("Can't get comic")
 
@@ -38,5 +39,11 @@ fun getComic(id: Int): Pair<Comic?, Exception?> {
 }
 
 fun getRandomComic(): Pair<Comic?, Exception?> {
-    return Pair(null, cantGetComic)
+    // Get latest xkcd id
+    val (oldest, err) = getLatestComic()
+    if (err != null) {
+        return Pair(null, err)
+    }
+
+    return getComic(Random.nextInt(1, oldest!!.num))
 }
