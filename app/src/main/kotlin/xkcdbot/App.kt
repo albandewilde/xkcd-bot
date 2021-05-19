@@ -34,6 +34,17 @@ suspend fun main() {
                 args.isEmpty() -> {{index.getComic(Random.nextInt(1, index.getIdx()))}}
                 // The user ask for the latest comic
                 args[0] == "latest" -> {{index.getComic(index.getIdx())}}
+                // The user ast what are the bot's commands
+                args[0] == "aled" -> {
+                    it.reply(
+                        "xkcd-bot available commands:\n" +
+                        "    - `ù latest` → Show the latest xkcd comic\n" +
+                        "    - `ù <id>` → Show the xkcd n°<id>\n" +
+                        "    - `ù` → Show a random xkcd comic\n" +
+                        "    - `ù aled` → Show help\n"
+                    )
+                    return@messageCreated
+                }
                 // The user ask for a specific comic
                 args[0].toIntOrNull() != null -> {{index.getComic(args[0].toInt())}}
                 // This case mustn't append
