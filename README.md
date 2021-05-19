@@ -8,6 +8,9 @@ The project is a basic gradle project.
 
 ### In docker
 
+Before all you must copy the `.env.tpl` file into `.env` and complete it with
+the token of your bot given by discord.
+
 To start the project with the make file.  
 You must first build the image with `make image` then run it with `make ctn-run`.
 

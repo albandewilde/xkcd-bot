@@ -36,3 +36,6 @@ app/build/*
 
 # Vim swap files
 *.swp
+
+# Don't commit environement variables
+.env
