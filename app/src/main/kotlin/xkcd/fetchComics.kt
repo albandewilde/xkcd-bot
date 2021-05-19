@@ -7,8 +7,6 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import kotlin.random.Random
 
-private val cantGetComic = Exception("Can't get comic")
-
 private fun fetch(url: String): Pair<String, Int> {
     val c = HttpClient.newHttpClient()
     val r = HttpRequest.newBuilder(URI.create(url)).build()
@@ -17,33 +15,35 @@ private fun fetch(url: String): Pair<String, Int> {
     return Pair(resp.body(), resp.statusCode())
 }
 
-private fun fetchComic(url: String): Pair<Comic?, Exception?> {
+private fun fetchComic(url: String): Comic {
     val (json, status) = fetch(url)
-    return if (status == 200) {
-        Pair(
-            Gson().fromJson(json, Comic::class.java),
-            null,
-        )
+    if (status == 200) {
+        return Gson().fromJson(json, Comic::class.java)
     } else {
-        Pair(null, cantGetComic)
+        throw(
+            when (status) {
+                in 100..199 -> Exception("Informational response from xkcd.com")
+                in 200..299 -> Exception("Success, but no comic returned from xkcd.com")
+                in 300..399 -> Exception("Redirected by xkcd.com")
+                in 400..499 -> Exception("Error from the bot")
+                in 500..599 -> Exception("Error from xkcd.com")
+                else -> Exception("Unknown error")
+            }
+        )
     }
 }
 
 
-fun getLatestComic(): Pair<Comic?, Exception?> {
+fun getLatestComic(): Comic {
     return fetchComic("https://xkcd.com/info.0.json")
 }
 
-fun getComic(id: Int): Pair<Comic?, Exception?> {
+fun getComic(id: Int): Comic {
     return fetchComic("https://xkcd.com/$id/info.0.json")
 }
 
-fun getRandomComic(): Pair<Comic?, Exception?> {
+fun getRandomComic(): Comic {
     // Get latest xkcd id
-    val (oldest, err) = getLatestComic()
-    if (err != null) {
-        return Pair(null, err)
-    }
-
-    return getComic(Random.nextInt(1, oldest!!.num))
+    val latestId = getLatestComic().num
+    return getComic(Random.nextInt(1, latestId))
 }
