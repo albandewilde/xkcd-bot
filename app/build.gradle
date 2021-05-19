@@ -33,6 +33,9 @@ dependencies {
 
     // Kotlin discord lib
     implementation 'com.jessecorbett:diskord:1.8.1'
+
+    // Google lib to parse json
+    implementation 'com.google.code.gson:gson:2.8.6'
 }
 
 application {
