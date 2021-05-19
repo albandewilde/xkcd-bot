@@ -1,8 +1,7 @@
 package xkcdbot
 
-import com.jessecorbett.diskord.api.rest.Embed
 import com.jessecorbett.diskord.dsl.*
-import xkcd.fetchLatestComic
+import xkcd.*
 
 const val PREFIX = "ù"
 
@@ -22,16 +21,31 @@ suspend fun main() {
                 return@messageCreated
             }
 
-            // Assume when no arguments is given the user want the latest xkcd comic
-            if (args.isEmpty() || args[0] == "latest") {
-                // Fetch latest xkcd comic
-                val c = fetchLatestComic()
-                // Convert the comic into a discord embedded message
-                val e = comicToEmbedded(c)
-                // Reply to the user
-                it.reply("", e)
+            // Dispatch argument to function
+            val requestComic: () -> Pair<Comic?, Exception?> = when {
+                // The user don't specify anything, so we give him a random comic
+                args.isEmpty() -> {{getRandomComic()}}
+                // The user ask for the latest comic
+                args[0] == "latest" -> {{getLatestComic()}}
+                // The user ask for a specific comic
+                args[0].toIntOrNull() != null -> {{getComic(args[0].toInt())}}
+                else -> {{Pair(null, Exception("An unexpected error has occured"))}}
+            }
+
+            // Request comic
+            val (c, err) = requestComic()
+
+            // Check if we have the comic
+            if (err != null) {
+                it.reply("Can't get the comic")
                 return@messageCreated
             }
+
+            // Convert the comic into a discord embedded message
+            val e = comicToEmbedded(c!!)
+            // Reply to the user
+            it.reply("", e)
+            return@messageCreated
         }
     }
 }
