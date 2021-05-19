@@ -15,7 +15,10 @@ suspend fun main() {
             // Separate the message into prefix and arguments
             val words = it.content.split(" ")
             val prefix = words[0]
-            val args = words.slice(1 until words.size)
+            // Use a by lazy because we need it for tp notation
+            val args: List<String> by lazy {
+                words.slice(1 until words.size)
+            }
 
             // Check if the prefix is present
             if (prefix != PREFIX) {
@@ -42,7 +45,6 @@ suspend fun main() {
                 it.reply("We can't get you the comic.\n${e.message}")
                 return@messageCreated
             }
-
 
             // Convert the comic into a discord embedded message
             val e = comicToEmbedded(c)
