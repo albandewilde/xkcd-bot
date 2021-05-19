@@ -1,10 +1,13 @@
 package xkcdbot
 
-import com.jessecorbett.diskord.api.rest.Embed
 import com.jessecorbett.diskord.dsl.*
-import xkcd.*
+import index.*
+import xkcd.Comic
+import kotlin.random.Random
 
 const val PREFIX = "ù"
+
+var index = ComicsIndex()
 
 suspend fun main() {
     val DISCORD_TKN = System.getenv("DISCORD_TKN")
@@ -28,11 +31,11 @@ suspend fun main() {
             // Dispatch argument to function
             val requestComic: () -> Comic = when {
                 // The user don't specify anything, so we give him a random comic
-                args.isEmpty() -> {{getRandomComic()}}
+                args.isEmpty() -> {{index.getComic(Random.nextInt(1, index.getIdx()))}}
                 // The user ask for the latest comic
-                args[0] == "latest" -> {{getLatestComic()}}
+                args[0] == "latest" -> {{index.getComic(index.getIdx())}}
                 // The user ask for a specific comic
-                args[0].toIntOrNull() != null -> {{getComic(args[0].toInt())}}
+                args[0].toIntOrNull() != null -> {{index.getComic(args[0].toInt())}}
                 // This case mustn't append
                 else -> {it.reply("Error parsing command"); return@messageCreated}
             }
