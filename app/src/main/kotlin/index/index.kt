@@ -30,7 +30,6 @@ class ComicsIndex {
         if (!comics.containsKey(id)) {
             comics[id] = xkcd.getComic(id)
         }
-        println(comics.keys)
         return comics[id]!!
     }
 
