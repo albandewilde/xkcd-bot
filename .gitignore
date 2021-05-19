@@ -30,3 +30,5 @@ build
 
 # Ignore Gradle build output directory
 app/build/*
+
+*.swp
