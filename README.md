@@ -1,6 +1,7 @@
 # xkcd-bot
 
-Kotlin implementation of https://gitlab.com/neuware/xkcd-bot for school kotlin TP
+Kotlin implementation of https://gitlab.com/neuware/xkcd-bot for school kotlin TP.  
+(The search by key word or regex isn't implemented)
 
 The project is a basic gradle project.
 
@@ -21,3 +22,23 @@ To make a quick run use `make quick`. It'll do `./gadlew run` in a docker contai
 Simply run `./gradlew run` to run the project.  
 You can also use `./gradlew build` to build the project.
 The build will be in the `./app/build/distributions/` directory.
+
+## TP notation
+
+Out professor tell us the code should be clean and idiomatic kotlin.
+
+It should also use all of this:
+
+- [x] - lazy
+- [x] - latinit
+- [ ] - HOF
+- [x] - data class
+- [ ] - delegation
+- [x] - if
+- [x] - for loop
+- [ ] - smart cast (is)
+- [x] - collection
+- [ ] - extentions
+- [x] - lambda
+- [x] - koroutine
+- [x] - scope func
