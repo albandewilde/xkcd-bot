@@ -28,6 +28,7 @@ class ComicsIndex {
     fun getComic(id: Int): Comic {
         // Check if we already have the comic
         if (!comics.containsKey(id)) {
+            // Add the comic to our index
             comics[id] = xkcd.getComic(id)
         }
         return comics[id]!!
@@ -36,20 +37,8 @@ class ComicsIndex {
     // Method to index all already existing comics
     suspend fun indexing() = coroutineScope {
         launch {
-            // Existing comic indexed
-            for (i in idx downTo 1) {
-                // We already got the comic
-                if (comics.containsKey(i)) {
-                    continue
-                }
-
-                // Fetch the comic we don't have
-                val c = xkcd.getComic(i)
-                comics[c.num] = c
-
-                // Sleep to don't overload the site
-                Thread.sleep(1_000) // Sleep one second
-            }
+            // Fetch already publiched comics
+            fetchComicRange(1, idx-1)
         }
     }
 
@@ -65,9 +54,29 @@ class ComicsIndex {
                     comics[c.num] = c
                 }
 
+                // Also fetch possible missing comics
+                fetchComicRange(idx+1, c.num-1)
+
+                // Update the new latest comis idx
+                idx = c.num
+
                 // Sleep to don't overload the site
                 Thread.sleep(1_000 * 60 * 10) // Sleep 10 minutes
             }
         }
     }
+
+    fun fetchComicRange(begin: Int, end: Int) {
+        for (i in begin..end) {
+            if (comics.containsKey(i)) {
+                continue
+            }
+
+            getComic(i)
+
+            // Sleep to don't overload the site
+            Thread.sleep(1_000) // Sleep one second
+        }
+    }
+
 }
