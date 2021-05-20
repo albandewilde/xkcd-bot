@@ -4,9 +4,14 @@ WORKDIR /usr/src/app/
 
 COPY . .
 
-# Don't use gradle warpper to don't update gradle
-# on each image build
-RUN gradle --console=rich build
-RUN tar -C /bin -xvf app/build/distributions/app.tar
+RUN gradle build
+
+
+FROM openjdk:11-slim
+
+WORKDIR /bin/xkcd-bot/
+
+COPY --from=builder /usr/src/app/app/build/distributions/app.tar .
+RUN tar -C /bin -xvf/bin/xkcd-bot/app.tar
 
 CMD ["/bin/app/bin/./app"]
