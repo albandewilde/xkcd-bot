@@ -21,4 +21,4 @@ ctn-stop:
 	fi
 
 quick:
-	docker run -ti --volume=${PWD}:/home/gradle gradle ./gradlew run
+	docker run -ti --env-file .env --volume=${PWD}:/home/gradle gradle:7.0.2-jdk11 gradle run

@@ -15,7 +15,7 @@ the token of your bot given by discord.
 To start the project with the make file.  
 You must first build the image with `make image` then run it with `make ctn-run`.
 
-To make a quick run use `make quick`. It'll do `./gadlew run` in a docker container.
+To make a quick run use `make quick`. It'll do `gadle run` in a docker container.
 
 ### With gradlew
 
