@@ -27,3 +27,6 @@ fun twoDigitNumber(): (Int) -> String {
     val pattern = "00"
     return {n -> DecimalFormat(pattern).format(n)}
 }
+
+// Use extension
+fun Comic.toEmbedded() = this.let{comicToEmbedded(it, twoDigitNumber())} // Scope function and an HOF because we need it for the tp

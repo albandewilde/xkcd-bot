@@ -38,7 +38,7 @@ It should also use all of this:
 - [x] - for loop
 - [x] - smart cast (is)
 - [x] - collection
-- [ ] - extentions
+- [x] - extentions
 - [x] - lambda
 - [x] - koroutine
 - [x] - scope func
