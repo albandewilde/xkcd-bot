@@ -7,8 +7,12 @@ import xkcd.Comic
 import java.text.DecimalFormat
 
 fun comicToEmbedded(c: Comic, fmtFunc: (Int) -> String): Embed {
-    val month = fmtFunc(c.month.toInt())
-    val day = fmtFunc(c.day.toInt())
+    val m = c.month
+    val d = c.day
+
+    // Use smart cast because we need it for the tp
+    val month = if (m is String && m.length < 2) fmtFunc(m.toInt()) else m
+    val day = if (d is String && d.length < 2) fmtFunc(d.toInt()) else d
 
     return Embed(
         title = c.title,

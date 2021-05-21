@@ -36,7 +36,7 @@ It should also use all of this:
 - [ ] - delegation
 - [x] - if
 - [x] - for loop
-- [ ] - smart cast (is)
+- [x] - smart cast (is)
 - [x] - collection
 - [ ] - extentions
 - [x] - lambda
