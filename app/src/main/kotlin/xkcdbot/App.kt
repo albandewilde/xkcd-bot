@@ -61,7 +61,7 @@ suspend fun main() {
             }
 
             // Convert the comic into a discord embedded message
-            val e = c.let(::comicToEmbedded) // Scope function because we need it for the tp
+            val e = c.let{comicToEmbedded(it, twoDigitNumber())} // Scope function and an HOF because we need it for the tp
             // Reply to the user
             it.reply("", e)
             return@messageCreated

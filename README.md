@@ -31,7 +31,7 @@ It should also use all of this:
 
 - [x] - lazy
 - [x] - latinit
-- [ ] - HOF
+- [x] - HOF
 - [x] - data class
 - [ ] - delegation
 - [x] - if
