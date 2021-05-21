@@ -34,7 +34,7 @@ suspend fun main() {
                 args.isEmpty() -> {{index.getComic(Random.nextInt(1, index.getIdx()))}}
                 // The user ask for the latest comic
                 args[0] == "latest" -> {{index.getComic(index.getIdx())}}
-                // The user ast what are the bot's commands
+                // The user ask what are the bot's commands
                 args[0] == "aled" -> {
                     it.reply(
                         "xkcd-bot available commands:\n" +
